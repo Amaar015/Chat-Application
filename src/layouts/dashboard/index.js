@@ -58,7 +58,7 @@ const DashboardLayout = () => {
     console.log(theme);
     const {onToggleMode} =useStettings();
    return (
-    <>
+    <Stack direction='row'>
       <Box sx={{backgroundColor:theme.palette.background.paper,width:100,  boxShadow:"0px 0px 2px rgba(0,0,0,0.24)" , height:'100vh'}}>
              <Stack direction='column' alignItems='center' justifyContent='space-between' sx={{height:'100%', paddingTop:"1rem"}} spacing={3}>
                        
@@ -131,7 +131,7 @@ const DashboardLayout = () => {
       </Box>
       
       <Outlet />
-    </>
+    </Stack>
   );
 };
 
