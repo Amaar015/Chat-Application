@@ -167,6 +167,15 @@ const Chat_History = [
     incoming: true,
     outgoing: false,
   },
+  
+  {
+    type: "msg",
+    subtype: "img",
+    message: "can get point",
+    img: faker.image.animals(),
+    incoming: false,
+    outgoing: true,
+  },
   {
     type: "msg",
     message: "Can you please send this in file format?",
@@ -196,6 +205,14 @@ const Chat_History = [
     message: "Yep, I can also do that",
     incoming: false,
     outgoing: true,
+  },
+  {
+    type: "msg",
+    subtype: "reply",
+    reply: "Ok, Let's speak about place",
+    message: "Here You Go",
+    incoming: true,
+    outgoing: false,
   },
 ];
 

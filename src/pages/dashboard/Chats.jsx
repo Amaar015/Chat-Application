@@ -4,7 +4,7 @@ import { ArchiveBox, CircleDashed, MagnifyingGlass } from 'phosphor-react'
 
 import React from 'react'
 import { ChatList } from '../../data';
-import { SimpleBarStyle } from '../../components/Scrollbar';
+import {SimpleBarStyle} from '../../components/Scrollbar';
 
   //  custom-styling-search-box
    const Search =styled('div')(({theme})=>({
@@ -129,10 +129,10 @@ const Chats = () => {
               <ArchiveBox size={24}/>
               <Button>Archive</Button>
             </Stack>
-            <Divider/>
+            <Divider width='50px' color='#000'/>
            </Stack>
            {/* user-list */}
-           <Stack direction="column" sx={{flexGrow:1, overflow:'scroll', height:"100%"}}>
+           <Stack direction="column" sx={{flexGrow:1, overflowY:"scroll", height:"100%"}}>
              <SimpleBarStyle timeout={500} clickOnTrack={false}>
             <Stack spacing={2.4}>
               <Typography variant='subtitle2'>Pinned</Typography>
