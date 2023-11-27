@@ -1,7 +1,7 @@
 import { Box,Stack } from '@mui/material'
 import React from 'react'
 import {Chat_History} from '../../data';
-import { ImgMsg, LinkMsg, ReplyMsg, TextMsg, Timeline } from './MessageType';
+import { DocImg, ImgMsg, LinkMsg, ReplyMsg, TextMsg, Timeline } from './MessageType';
 
 
 const Message = () => {
@@ -17,8 +17,7 @@ const Message = () => {
                  case "img":
                   return <ImgMsg el={el}/>
                   case "doc":
-                    // Doc img
-                    break;
+                     return <DocImg el={el}/>
                   case "link":
                     return <LinkMsg el={el}/>
                   case "reply":

@@ -1,8 +1,47 @@
 
 import React from 'react'
 import { useTheme } from '@mui/material/styles';
-import { Box, Divider, Link, Stack, Typography } from '@mui/material';
+import { Box, Divider, IconButton, Link, Stack, Typography } from '@mui/material';
+import { DownloadSimple, Image } from 'phosphor-react';
 
+
+const DocImg=({el})=>{
+   const theme=useTheme();
+   return (
+    <Stack direction='row'   justifyContent={el.incoming? "start": "end"}>
+    <Box 
+     p={1.5}
+     
+     sx={{
+      backgroundColor:el.incoming? theme.palette.background.paper:
+       theme.palette.primary.main,
+       borderRadius:1.5,
+       width:"max-content"
+     }}
+    >
+       <Stack spacing={2}>
+          <Stack 
+           p={2}
+           direction='row'
+           alignItems='center'
+           spacing={3}
+           sx={{
+            backgroundColor:theme.palette.background.paper,
+            borderRadius:1,
+           }}
+          >
+            <Image size={48}/>
+            <Typography variant='caption'>Abstract.png</Typography>
+            <IconButton>
+              <DownloadSimple/>
+            </IconButton>
+          </Stack>
+          <Typography variant='body2' sx={{color:el.incoming? theme.palette.primary.main:"#fff"}}>{el.message}</Typography>
+       </Stack>
+      </Box> 
+      </Stack>
+   )
+}
 
 // chat-link-message
 const LinkMsg=({el})=>{
@@ -56,7 +95,7 @@ const LinkMsg=({el})=>{
                spacing={2}
                alignItems='center'
                sx={{
-                backgroundColor:theme.palette.background.paper,
+                backgroundColor:el.incoming? theme.palette.background.default : theme.palette.background.paper,
                 borderRadius:1,
                }}
               >
@@ -125,4 +164,4 @@ const Timeline = ({el}) => {
   </Stack>
 }
 
-export  {Timeline,TextMsg,ImgMsg,ReplyMsg,LinkMsg}
+export  {Timeline,TextMsg,ImgMsg,ReplyMsg,LinkMsg,DocImg}

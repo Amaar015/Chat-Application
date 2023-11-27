@@ -2,7 +2,8 @@ import { Box, Stack , IconButton,  TextField, InputAdornment } from '@mui/materi
 import {styled, useTheme } from '@mui/material/styles'
 import React from 'react'
 import {  LinkSimple,  PaperPlaneTilt, Smiley, } from 'phosphor-react';
-
+import data from '@emoji-mart/data'
+import { Picker } from 'emoji-mart'
 
 
 const StyleInput= styled(TextField)(({theme})=>({
@@ -10,18 +11,11 @@ const StyleInput= styled(TextField)(({theme})=>({
      paddingTop:"12px",
      paddingBottom:"12px",
    }
-}))
-
-const ChatFooter = () => {
-    const theme=useTheme();
-     return (
-    <Box sx={{
-        width:'100%',
-        backgroundColor:theme.palette.mode=== 'light'? "#f8faff":theme.palette.background.paper,
-        boxShadow:"0px 0px 2px rgba(0,0,0,0.25)"
-      }}>
-       <Stack direction='row' alignItems='center' spacing={3} p={2}>
-        <StyleInput 
+}));
+ 
+const StyleInputs=()=>{
+  return (
+    <StyleInput 
         fullWidth
           placeholder='Write a message'
           variant='filled'
@@ -39,6 +33,24 @@ const ChatFooter = () => {
             </InputAdornment>
           }}
         />
+  )
+ }
+
+
+const ChatFooter = () => {
+    const theme=useTheme();
+     return (
+    <Box sx={{
+        width:'100%',
+        backgroundColor:theme.palette.mode=== 'light'? "#f8faff":theme.palette.background.paper,
+        boxShadow:"0px 0px 2px rgba(0,0,0,0.25)"
+      }}>
+       <Stack direction='row' alignItems='center' spacing={3} p={2}>
+            <Stack>
+              <Picker theme={theme.palette.mode} data={data} onEmojiSelect={console.log}/>
+            <StyleInputs />
+            </Stack>
+            
         <Box sx={{height:48, width:48, backgroundColor:theme.palette.primary.main, borderRadius:1.5}}>
           <Stack sx={{height:"100%" , width:"100%"}} alignItems='center' justifyContent='center'>
             <IconButton>
