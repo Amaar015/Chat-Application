@@ -1,9 +1,9 @@
 import { Box, Stack , IconButton,  TextField, InputAdornment } from '@mui/material'
 import {styled, useTheme } from '@mui/material/styles'
-import React from 'react'
-import {  LinkSimple,  PaperPlaneTilt, Smiley, } from 'phosphor-react';
+import React, { useState } from 'react'
+import {  Camera, File, Image, LinkSimple,  PaperPlaneTilt, Smiley, Sticker, User, } from 'phosphor-react';
 import data from '@emoji-mart/data'
-import { Picker } from 'emoji-mart'
+import Picker from '@emoji-mart/react'
 
 
 const StyleInput= styled(TextField)(({theme})=>({
@@ -13,7 +13,40 @@ const StyleInput= styled(TextField)(({theme})=>({
    }
 }));
  
-const StyleInputs=()=>{
+  const Actins=[
+       {
+        color:"#4da5fe",
+        icon: <Image size={24}/>,
+        title:"Photo/Video",
+        y:102
+       },
+       {
+        color:"#1b8cfe",
+        icon: <Sticker size={24}/>,
+        title:"Stickers",
+        y:172,
+       },
+       {
+        color:"#0172e4",
+        icon: <Camera size={24}/>,
+        title:"Image",
+        y:242
+       },
+       {
+        color:"#0159b2",
+        icon: <File size={24}/>,
+        title:"Stickers",
+        y:312,
+       },
+       {
+        color:"#013f7f",
+        icon: <User size={24}/>,
+        title:"Contact",
+        y:242
+       }
+  ];
+const StyleInputs=({op,sop})=>{
+  
   return (
     <StyleInput 
         fullWidth
@@ -21,14 +54,19 @@ const StyleInputs=()=>{
           variant='filled'
           InputProps={{
             disableUnderline:true,
-            startAdornment:<InputAdornment>
+            startAdornment:
+             <Stack sx={{width:"max-content"}}>
+              <Stack sx={{position:"relative" ,}}></Stack>
+            <InputAdornment>
             <IconButton>
               <LinkSimple/>
             </IconButton>
-            </InputAdornment>,
+            </InputAdornment>
+            </Stack>
+            ,
             endAdornment:<InputAdornment>
             <IconButton>
-              <Smiley/>
+              <Smiley onClick={()=>sop(!op)}/>
             </IconButton>
             </InputAdornment>
           }}
@@ -36,19 +74,22 @@ const StyleInputs=()=>{
   )
  }
 
-
+ 
 const ChatFooter = () => {
     const theme=useTheme();
-     return (
+    const [openPicker,setopenPicker]=useState(false);
+    return (
     <Box sx={{
         width:'100%',
         backgroundColor:theme.palette.mode=== 'light'? "#f8faff":theme.palette.background.paper,
         boxShadow:"0px 0px 2px rgba(0,0,0,0.25)"
       }}>
        <Stack direction='row' alignItems='center' spacing={3} p={2}>
-            <Stack>
+            <Stack sx={{width:"100%"}}>
+              <Box sx={{display: openPicker ? 'inline': "none", zIndex:10, position:"fixed", right:81,bottom:100}}>
               <Picker theme={theme.palette.mode} data={data} onEmojiSelect={console.log}/>
-            <StyleInputs />
+              </Box>
+            <StyleInputs op={openPicker} sop={setopenPicker} />
             </Stack>
             
         <Box sx={{height:48, width:48, backgroundColor:theme.palette.primary.main, borderRadius:1.5}}>
