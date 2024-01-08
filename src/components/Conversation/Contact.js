@@ -1,5 +1,5 @@
-import { Avatar, Box, Button, Divider, IconButton, Stack, Switch, Typography } from '@mui/material'
-import React from 'react'
+import { Avatar, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, IconButton, Slide, Stack, Switch, Typography } from '@mui/material'
+import React, { useState } from 'react'
 import { useTheme } from '@mui/material/styles'
 import { Bell, CaretRight, Phone, Star, VideoCamera, X } from 'phosphor-react';
 import { useDispatch } from 'react-redux';
@@ -8,10 +8,73 @@ import { fa, faker } from '@faker-js/faker';
 import { SafetyDivider } from '@mui/icons-material';
 import BlockIcon from '@mui/icons-material/Block';
 import DeleteIcon from '@mui/icons-material/Delete';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});    
+
+const BlockDialog=({open, handleClose})=>{
+    return (
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>Block this contact</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+             are you sure you want to block this contact ?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Confirm</Button>
+          <Button onClick={handleClose}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
+
+    )
+}
+const DeleteDialog=({open, handleClose})=>{
+  return (
+    <Dialog
+      open={open}
+      TransitionComponent={Transition}
+      keepMounted
+      onClose={handleClose}
+      aria-describedby="alert-dialog-slide-description"
+    >
+      <DialogTitle>Delete this contact</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-slide-description">
+           are you sure you want to delete this contact ?
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Confirm</Button>
+        <Button onClick={handleClose}>Cancel</Button>
+      </DialogActions>
+    </Dialog>
+
+  )
+}
+
 const Contact = () => {
   const theme=useTheme();
  const dispatch=useDispatch()
-  return (
+  const [openBlock, SetOpenBlock]=useState(false);
+  const [openDelete, SetOpenDelete]=useState(false);
+
+ const handleClosedBlock=()=>{
+        SetOpenBlock(false);
+ }
+ 
+ const handleClosedDlete=()=>{
+  SetOpenDelete(false);
+}
+
+ return (
     <Box sx={{width:320,height:'100vh'}}>
       <Stack sx={{height:"100%"}}>
         <Box sx={{
@@ -99,12 +162,23 @@ const Contact = () => {
            </Stack>
            </Stack>
            <Stack direction={'row'} alignItems={'center'} spacing={2}>
-             <Button startIcon={<BlockIcon/>} fullWidth variant='outlined'>Block</Button>
-             <Button startIcon={<DeleteIcon/>} fullWidth variant='outlined'>Delete</Button>
+             <Button 
+               onClick={()=>{
+                SetOpenBlock(true);
+               }}
+              startIcon={<BlockIcon/>} fullWidth variant='outlined'>Block</Button>
+             <Button
+               onClick={()=>{
+                SetOpenDelete(true);
+               }}
+             startIcon={<DeleteIcon/>} fullWidth variant='outlined'>Delete</Button>
 
            </Stack>
         </Stack>
       </Stack>
+       {openBlock && <BlockDialog open={openBlock} handleClose={handleClosedBlock}/>}
+       {openDelete && <BlockDialog open={openDelete} handleClose={handleClosedDlete}/>}
+
     </Box>
 
   )
