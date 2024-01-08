@@ -4,11 +4,13 @@ import Router from "./routes";
 import ThemeProvider from './theme';
 // components
 import ThemeSettings from './components/settings';
+import './App.css'
 
 function App() {
   return (
     <ThemeProvider>
       <ThemeSettings>
+        
         {" "}
         <Router />{" "}
       </ThemeSettings>

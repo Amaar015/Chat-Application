@@ -1,10 +1,9 @@
-import { Box, Stack , IconButton,  TextField, InputAdornment } from '@mui/material'
+import { Box, Stack , IconButton,  TextField, InputAdornment, Tooltip, Fab } from '@mui/material'
 import {styled, useTheme } from '@mui/material/styles'
 import React, { useState } from 'react'
 import {  Camera, File, Image, LinkSimple,  PaperPlaneTilt, Smiley, Sticker, User, } from 'phosphor-react';
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
-
 
 const StyleInput= styled(TextField)(({theme})=>({
    "& .MuiInputBase-input":{
@@ -13,7 +12,7 @@ const StyleInput= styled(TextField)(({theme})=>({
    }
 }));
  
-  const Actins=[
+  const Actions=[
        {
         color:"#4da5fe",
         icon: <Image size={24}/>,
@@ -46,7 +45,7 @@ const StyleInput= styled(TextField)(({theme})=>({
        }
   ];
 const StyleInputs=({op,sop})=>{
-  
+  const [openActions,SetopenActions]=useState(false);
   return (
     <StyleInput 
         fullWidth
@@ -54,16 +53,39 @@ const StyleInputs=({op,sop})=>{
           variant='filled'
           InputProps={{
             disableUnderline:true,
-            startAdornment:
+            startAdornment:(
              <Stack sx={{width:"max-content"}}>
-              <Stack sx={{position:"relative" ,}}></Stack>
+              <Stack sx={{position:"relative",
+                   display:openActions? 'inline-block': 'none'
+                  }}>
+                    {Actions.map((el)=>(
+                       <Tooltip placement="right" title={el.title}>
+                       <Fab
+                         onClick={() => {
+                           SetopenActions(!openActions);
+                         }}
+                         sx={{
+                           position: "absolute",
+                           top: -el.y,
+                           backgroundColor: el.color,
+                         }}
+                         aria-label="add"
+                       >
+                         {el.icon}
+                       </Fab>
+                     </Tooltip>
+                    ))}
+                  </Stack>
             <InputAdornment>
             <IconButton>
-              <LinkSimple/>
+              <LinkSimple 
+               onClick={() => {
+                SetopenActions(!openActions);
+              }}/>
             </IconButton>
             </InputAdornment>
             </Stack>
-            ,
+            ),
             endAdornment:<InputAdornment>
             <IconButton>
               <Smiley onClick={()=>sop(!op)}/>

@@ -4,7 +4,7 @@ import {Chat_History} from '../../data';
 import { DocImg, ImgMsg, LinkMsg, ReplyMsg, TextMsg, Timeline } from './MessageType';
 
 
-const Message = () => {
+const Message = ({menu}) => {
   return (
      <Box p={3}>
        <Stack spacing={3}>
@@ -15,16 +15,16 @@ const Message = () => {
               case "msg":
               switch (el.subtype){
                  case "img":
-                  return <ImgMsg el={el}/>
+                  return <ImgMsg el={el} menu={menu}/>
                   case "doc":
-                     return <DocImg el={el}/>
+                     return <DocImg el={el} menu={menu}/>
                   case "link":
-                    return <LinkMsg el={el}/>
+                    return <LinkMsg el={el} menu={menu}/>
                   case "reply":
-                     return <ReplyMsg el={el}/>
+                     return <ReplyMsg el={el} menu={menu}/>
                     
                   default:
-                  return <TextMsg el={el}/>  
+                  return <TextMsg el={el} menu={menu}/>  
               }
               break;
               default:

@@ -1,11 +1,12 @@
 
 import React from 'react'
 import { useTheme } from '@mui/material/styles';
-import { Box, Divider, IconButton, Link, Stack, Typography } from '@mui/material';
-import { DownloadSimple, Image } from 'phosphor-react';
+import { Box, Divider, IconButton, Link, Menu, MenuItem, Stack, Typography } from '@mui/material';
+import { DotsThreeCircleVertical, DownloadSimple, Image } from 'phosphor-react';
+import { Message_options } from '../../data';
 
 
-const DocImg=({el})=>{
+const DocImg=({el,menu})=>{
    const theme=useTheme();
    return (
     <Stack direction='row'   justifyContent={el.incoming? "start": "end"}>
@@ -39,12 +40,14 @@ const DocImg=({el})=>{
           <Typography variant='body2' sx={{color:el.incoming? theme.palette.primary.main:"#fff"}}>{el.message}</Typography>
        </Stack>
       </Box> 
+      {menu && <MessageOption/>}
+      
       </Stack>
    )
 }
 
 // chat-link-message
-const LinkMsg=({el})=>{
+const LinkMsg=({el,menu})=>{
   const theme= useTheme();
   return (
             
@@ -70,11 +73,13 @@ const LinkMsg=({el})=>{
       </Stack>
      </Stack>
     </Box> 
+    {menu && <MessageOption/>}
+    
     </Stack>
   ); 
 }
 // chat-reply-message
-  const ReplyMsg =({el})=>{
+  const ReplyMsg =({el,menu})=>{
       const theme= useTheme();
      return (
                
@@ -108,12 +113,14 @@ const LinkMsg=({el})=>{
               </Typography>
             </Stack>
             </Box>
+            {menu && <MessageOption/>}
+            
             </Stack>
           );
 
   }
 // chat-image-message
-const ImgMsg =({el})=>{
+const ImgMsg =({el, menu})=>{
   const theme=useTheme();    
   return (
       <Stack direction='row' justifyContent={el.incoming? "start": "end"}>
@@ -133,12 +140,13 @@ const ImgMsg =({el})=>{
                 </Typography>
             </Stack>
           </Box>
-
+          {menu && <MessageOption/>}
+          
         </Stack>
       )
 }
 // chat-text-message
- const TextMsg =({el})=>{
+ const TextMsg =({el,menu})=>{
        const theme=useTheme();
   return <Stack direction='row' justifyContent={el.incoming ? "start" : "end"}>
      <Box 
@@ -150,9 +158,50 @@ const ImgMsg =({el})=>{
       <Typography variant='body2' 
        color={el.incoming ? theme.palette.text : '#fff'}>{el.message} </Typography>
      </Box>
+     {menu && <MessageOption/>}
      
   </Stack>
  }
+
+ const MessageOption=()=>{
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+    
+  return(
+        <>
+          <DotsThreeCircleVertical 
+          id="basic-button"
+          aria-controls={open ? 'basic-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+          onClick={handleClick}
+          size={20}/>
+          <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <Stack spacing={1} px={1}>
+          { Message_options.map((el)=>(
+            <MenuItem onClick={handleClose}>{el.title}</MenuItem>
+          ))}
+        </Stack>
+       
+      </Menu>
+
+        </>
+      )
+ } 
 
 // Chat-timeline
 const Timeline = ({el}) => {
