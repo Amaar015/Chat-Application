@@ -4,7 +4,8 @@ import * as Yup from 'yup';
 import {useForm} from 'react-hook-form'
 import {yupResolver} from '@hookform/resolvers/yup';
 import { RHFTextField } from '../../components/hook-form';
-import { Alert, Stack } from '@mui/material';
+import { Alert, Button, IconButton, InputAdornment, Link, Stack } from '@mui/material';
+import { Eye, EyeSlash } from 'phosphor-react';
 
 const LoginForm = () => {
   const [showpassword,Setshowpassword]=useState(false);
@@ -48,9 +49,40 @@ const LoginForm = () => {
 
        <Stack spacing={3}>
          {!!errors.afterSubmit && <Alert severity='error'>{errors.afterSubmit.message}</Alert>}
-        </Stack>    
+            
            <RHFTextField name='email' label="Email address"/>
-
+              
+           <RHFTextField name='password' label='Password' type={showpassword ? "text" : "password"} InputProps={{
+            endAdornment:(
+                  <InputAdornment>
+                    <IconButton onClick={()=>{Setshowpassword(!showpassword)}}>
+                      {showpassword ? <Eye/> : <EyeSlash/>}
+                    </IconButton>
+                  </InputAdornment>
+            )
+           }}/>   
+      </Stack>
+       <Stack alignItems={'flex-end'} sx={{my:2}}>
+             <Link variant='body2' color='inherit' underline='always'>
+              Forgot Password?
+             </Link>
+       </Stack>
+        <Button
+        fullWidth
+        color='inherit'
+        size='large'
+        type='submit'
+        variant='contained'
+        sx={{
+          bgcolor:"text.primary",
+          color:(theme)=>
+          theme.palette.mode === "light" ? "common.white" : "grey.800",
+          "&:hover":{
+            bgcolor:"text.primary",
+            color:(theme)=>
+            theme.palette.mode==='light' ? "common.white": "grey.800",
+          }
+        }}>Login</Button>
     </FormProvider>
     
   )
