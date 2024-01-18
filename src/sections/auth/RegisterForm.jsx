@@ -12,15 +12,17 @@ import { Eye, EyeSlash } from "phosphor-react";
 // import { LoginUser } from "../../redux/slices/auth";
 // import { useDispatch, useSelector } from "react-redux";
 
-// ----------------------------------------------------------------------
-
-export default function AuthLoginForm() {
-  // const dispatch = useDispatch();
+const RegisterForm = () => {
+  
+      // const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
 
   // const {isLoading} = useSelector((state) => state.auth);
 
-  const LoginSchema = Yup.object().shape({
+  const RegisterSchema = Yup.object().shape({
+    firstName:Yup.string().required("First Name is required"),
+    lastName:Yup.string().required("Last Name is required"),
+
     email: Yup.string()
       .required("Email is required")
       .email("Email must be a valid email address"),
@@ -28,12 +30,14 @@ export default function AuthLoginForm() {
   });
 
   const defaultValues = {
+    firstName:"",
+    lastName:"",
     email: "demo@tawk.com",
     password: "demo1234",
   };
 
   const methods = useForm({
-    resolver: yupResolver(LoginSchema),
+    resolver: yupResolver(RegisterSchema),
     defaultValues,
   });
 
@@ -59,41 +63,38 @@ export default function AuthLoginForm() {
     }
   };
 
-  return (
-    <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={3}>
-        {!!errors.afterSubmit && (
-          <Alert severity="error">{errors.afterSubmit.message}</Alert>
-        )}
+  
+    return (
+        <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+        <Stack spacing={3}>
+          {!!errors.afterSubmit && (
+            <Alert severity="error">{errors.afterSubmit.message}</Alert>
+          )}
+          
+          <Stack direction={{xs:"column",sm:"row"}} spacing={2}>
+               <RHFTextField name="firstName" label="First Name"/>
+               <RHFTextField name="lastName" label="Last Name"/>
+          </Stack>
+          <RHFTextField name="email" label="Email address" />
 
-        <RHFTextField name="email" label="Email address" />
-
-        <RHFTextField
-          name="password"
-          label="Password"
-          type={showPassword ? "text" : "password"}
-          InputProps={{
+           <RHFTextField
+            name="password"
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            InputProps={{
             endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  onClick={() => setShowPassword(!showPassword)}
-                  edge="end"
-                >
-                  {showPassword ? <Eye /> : <EyeSlash />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-      </Stack>
-
-      <Stack alignItems="flex-end" sx={{ my: 2 }}>
-        <Link   variant="body2" color="inherit" underline="always">
-          Forgot password?
-        </Link>
-      </Stack>
-
-       <Button
+           <InputAdornment position="end">
+            <IconButton
+             onClick={() => setShowPassword(!showPassword)}
+             edge="end"
+            >
+          {showPassword ? <Eye /> : <EyeSlash />}
+          </IconButton>
+         </InputAdornment>
+          ),
+         }}
+          />
+          <Button
         fullWidth
         color="inherit"
         size="large"
@@ -110,8 +111,13 @@ export default function AuthLoginForm() {
           },
         }}
       >
-        Login
+        Create Account
       </Button>
-    </FormProvider>
-  );
+          </Stack>
+          
+          
+          </FormProvider>
+  )
 }
+
+export default RegisterForm
