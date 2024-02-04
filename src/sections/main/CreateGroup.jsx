@@ -1,20 +1,37 @@
-import { Dialog, DialogContent, DialogTitle, Slide } from "@mui/material";
+import {
+  Stack,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Slide,
+  Button,
+} from "@mui/material";
 import React from "react";
 import * as Yup from "yup";
+// components
+import FormProvider, { RHFTextField } from "../../components/hook-form";
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import FormProvider from "../../components/hook-form/FormProvider";
-import { RHFTextField } from "../../components/hook-form";
-import { Stack } from "phosphor-react";
+import RHFAutocomplete from "../../components/hook-form/RHFAutoComplete";
+
+const Members = ["Amaar Raza", "Mahmood Rasheed", "Hassnain Raza"];
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const CreateGroupForm = ({}) => {
+// import { LoginUser } from "../../redux/slices/auth";
+// import { useDispatch, useSelector } from "react-redux";
+
+// ----------------------------------------------------------------------
+
+function CreateGroupForm({ handleClose }) {
+  // const {isLoading} = useSelector((state) => state.auth);
+
   const NewGroupSchema = Yup.object().shape({
-    title: Yup.string().required("Title is Required"),
-    numbers: Yup.array().min(2, "Must have at least 2 members"),
+    title: Yup.string().required("Title is required"),
+    members: Yup.array().min(2, "Must have at least 2 members"),
   });
 
   const defaultValues = {
@@ -29,29 +46,53 @@ const CreateGroupForm = ({}) => {
 
   const {
     reset,
-    watch,
     setError,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful, isValid },
+    formState: { errors },
   } = methods;
 
   const onSubmit = async (data) => {
     try {
-      console.log("Data", data);
+      // console.log(data);
+      // submit data to backend
+      // dispatch(LoginUser(data));
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      reset();
+      setError("afterSubmit", {
+        ...error,
+        message: error.message,
+      });
     }
   };
+
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>
-        helloa
-        {/* <RHFTextField name="email" label="Email address" /> */}
+        <RHFTextField name="email" label="Email address" />
+        <RHFAutocomplete
+          name="members"
+          label="Members"
+          multiple
+          freeSolo
+          options={Members.map((option) => option)}
+          ChipProps={{ size: "medium" }}
+        />
+        <Stack
+          spacing={2}
+          direction={"row"}
+          alignItems={"center"}
+          justifyContent={"end"}
+        >
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button type="submit" variant="containde">
+            Create
+          </Button>
+        </Stack>
       </Stack>
     </FormProvider>
   );
-};
-
+}
 const CreateGroup = ({ open, handleClose }) => {
   return (
     <Dialog
@@ -62,10 +103,10 @@ const CreateGroup = ({ open, handleClose }) => {
       keepMounted
       sx={{ p: 4 }}
     >
-      <DialogTitle>Create New Group</DialogTitle>
+      <DialogTitle sx={{ mb: 3 }}>Create New Group</DialogTitle>
 
       <DialogContent>
-        <CreateGroupForm />
+        <CreateGroupForm handleClose={handleClose} />
       </DialogContent>
     </Dialog>
   );

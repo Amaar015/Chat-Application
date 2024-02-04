@@ -19,7 +19,7 @@ const Profile_Menu = [
     icon: <Gear />,
   },
   {
-    title: "Profile",
+    title: "Logout",
     icon: <SignOut />,
   },
 ];
@@ -129,6 +129,72 @@ const ChatList = [
   },
 ];
 
+const MembersList = [
+  {
+    id: 0,
+    img: faker.image.avatar(),
+    name: faker.person.firstName(),
+    online: true,
+  },
+  {
+    id: 1,
+    img: faker.image.avatar(),
+    name: faker.person.firstName(),
+    online: false,
+  },
+  {
+    id: 2,
+    img: faker.image.avatar(),
+    name: faker.person.firstName(),
+    online: true,
+  },
+  {
+    id: 3,
+    img: faker.image.avatar(),
+    name: faker.person.firstName(),
+    online: false,
+  },
+];
+
+const CallLogs = [
+  {
+    id: 0,
+    img: faker.image.avatar(),
+    name: faker.person.firstName(),
+    missed: false,
+    incoming: true,
+    // online: true,
+  },
+  {
+    id: 1,
+    img: faker.image.avatar(),
+    name: faker.person.firstName(),
+    missed: false,
+    incoming: false,
+  },
+  {
+    id: 2,
+    img: faker.image.avatar(),
+    name: faker.person.firstName(),
+    missed: true,
+    incoming: false,
+  },
+  {
+    id: 3,
+    img: faker.image.avatar(),
+    name: faker.person.firstName(),
+    missed: false,
+    incoming: true,
+  },
+  {
+    id: 4,
+    img: faker.image.avatar(),
+    name: faker.person.firstName(),
+    missed: true,
+    incoming: true,
+  },
+];
+
 const Chat_History = [
   {
     type: "msg",
@@ -167,7 +233,7 @@ const Chat_History = [
     incoming: true,
     outgoing: false,
   },
-  
+
   {
     type: "msg",
     subtype: "img",
@@ -237,8 +303,7 @@ const Message_options = [
   },
 ];
 
-const Shared_links=[
-  
+const Shared_links = [
   {
     type: "msg",
     subtype: "link",
@@ -271,9 +336,9 @@ const Shared_links=[
     incoming: true,
     outgoing: false,
   },
-]
+];
 
-const Shared_Docs=[
+const Shared_Docs = [
   {
     type: "msg",
     subtype: "doc",
@@ -302,12 +367,14 @@ const Shared_Docs=[
     incoming: true,
     outgoing: false,
   },
-]
+];
 export {
   Profile_Menu,
   Nav_Setting,
   Nav_Buttons,
   ChatList,
+  CallLogs,
+  MembersList,
   Chat_History,
   Message_options,
   Shared_links,

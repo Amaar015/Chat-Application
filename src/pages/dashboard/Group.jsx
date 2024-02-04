@@ -9,9 +9,11 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import Search from "../../components/Search/Search";
-import SearchIcon from "../../components/Search/SearchIconWrapper";
-import SearchInputBase from "../../components/Search/StyleBaseInput";
+import {
+  Search,
+  SearchIconWrapper,
+  StyledInputBase,
+} from "../../components/Search/index";
 import { MagnifyingGlass, Plus } from "phosphor-react";
 import { SimpleBarStyle } from "../../components/Scrollbar";
 import { ChatList } from "../../data";
@@ -127,10 +129,10 @@ const Group = () => {
             </Stack>
             <Stack sx={{ width: "100%" }}>
               <Search>
-                <SearchIcon>
+                <SearchIconWrapper>
                   <MagnifyingGlass color="#709ce6" />
-                </SearchIcon>
-                <SearchInputBase
+                </SearchIconWrapper>
+                <StyledInputBase
                   placeholder="Search ..."
                   inputProps={{ "aria-label": "Search" }}
                 />
@@ -155,7 +157,7 @@ const Group = () => {
             <Divider />
             <Stack
               spacing={3}
-              sx={{ flexGrow: 1, overflow: "scroll", height: "100%" }}
+              sx={{ flexGrow: 1, overflow: "auto", height: "100%" }}
             >
               <SimpleBarStyle timeout={500} clickOnTrack={false}>
                 <Stack spacing={2.5}>
