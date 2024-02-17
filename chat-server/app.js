@@ -8,7 +8,7 @@ const bodyparser = require("body-parser");
 const xss = require("xss");
 const app = express();
 const cors = require("cors");
-
+const routes = require("./routes/index");
 app.use(
   cors({
     origin: "*",
@@ -36,7 +36,12 @@ app.use("/tawk", limiter);
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use(mongosanitize());
-app.use(xss());
+// app.use(mongosanitize());
+// app.use(xss());
+
+// routing
+app.use(routes);
 
 module.exports = app;
+
+// http://localhost:3000/v1/auth/login
